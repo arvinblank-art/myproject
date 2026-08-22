@@ -105,11 +105,17 @@ proxy-groups:
   - {name: 🪟 Microsoft, type: select, proxies: [直连, 🚀 默认代理, ♻️ 香港自动, ♻️ 日本自动]}
   - {name: 🎵 TikTok, type: select, proxies: [♻️ 日本自动, ♻️ 狮城自动, ♻️ 美国自动, 🚀 默认代理, 直连]}
   - {name: 📲 Telegram, type: select, proxies: [♻️ 狮城自动, ♻️ 香港自动, ♻️ 日本自动, 🚀 默认代理, 直连]}
+  # 社交/通讯与媒体采用应用组，默认继续下沉到默认代理的国家测速组。
+  - {name: 💬 社交通讯, type: select, proxies: [🚀 默认代理, ♻️ 狮城自动, ♻️ 日本自动, ♻️ 美国自动, 直连]}
+  - {name: 🌍 海外媒体, type: select, proxies: [🚀 默认代理, ♻️ 香港自动, ♻️ 日本自动, ♻️ 狮城自动, ♻️ 美国自动, 直连]}
   - {name: 💶 PayPal, type: select, proxies: [🇯🇵 日本节点, ♻️ 日本自动]}
   # Interactive Brokers / IBKR：默认固定美国节点，保留美国自动作故障备用。
   - {name: 💹 IBKR, type: select, proxies: [🇺🇲 美国节点, ♻️ 美国自动]}
   # 香港银行及常用香港 App：银行登录期间优先固定节点，避免自动切换出口 IP。
   - {name: 🏦 香港服务, type: select, proxies: [🇭🇰 香港节点, ♻️ 香港自动, 直连]}
+  # 多层兜底：应用规则未覆盖时先进入 GFW 组；非标准端口仅作为可观察、可切换的末级兜底。
+  - {name: 🧱 GFW 兜底, type: select, proxies: [🚀 默认代理, ♻️ 香港自动, ♻️ 日本自动, ♻️ 狮城自动, ♻️ 美国自动, 直连]}
+  - {name: 🔀 非标端口, type: select, proxies: [🐟 漏网之鱼, 直连, 🚀 默认代理]}
   - {name: 🐟 漏网之鱼, type: select, proxies: [🚀 默认代理, ♻️ 香港自动, ♻️ 日本自动, ♻️ 狮城自动, ♻️ 美国自动, ♻️ 自动选择, 直连]}
 
   - {name: 🇭🇰 香港节点, type: select, include-all: true, filter: "(?=.*(港|HK|(?i)Hong))^((?!(台|日|韩|新|深|美)).)*$"}
@@ -171,15 +177,21 @@ rules:
   - RULE-SET,telegram_domain,📲 Telegram
   - RULE-SET,netflix_domain,🎥 NETFLIX
   - RULE-SET,paypal_domain,💶 PayPal
+  # Telegram、TikTok、Netflix 已在前面精确匹配；这里承接其余社交与海外媒体。
+  - RULE-SET,social_domain,💬 社交通讯
+  - RULE-SET,communication_domain,💬 社交通讯
+  - RULE-SET,entertainment_domain,🌍 海外媒体
   - RULE-SET,apple_ip,直连
   - RULE-SET,google_ip,🍀 Google
   - RULE-SET,netflix_ip,🎥 NETFLIX
   - RULE-SET,telegram_ip,📲 Telegram
   - DOMAIN-SUFFIX,qichiyu.com,🚀 默认代理
   - RULE-SET,proxylite,🚀 默认代理
+  - RULE-SET,gfw_domain,🧱 GFW 兜底
   - RULE-SET,geolocation-!cn,🚀 默认代理
   - RULE-SET,cn_domain,直连
   - RULE-SET,cn_ip,直连
+  - RULE-SET,nonstandard_port,🔀 非标端口
   - MATCH,🐟 漏网之鱼
 
 # 规则集
@@ -194,6 +206,10 @@ rule-providers:
   proxylite: { <<: *class, url: "https://raw.githubusercontent.com/qichiyuhub/rule/refs/heads/main/rules/proxy.list"}
   ai: { <<: *domain, url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/category-ai-!cn.mrs" }
   cryptocurrency: { <<: *domain, url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/category-cryptocurrency.mrs" }
+  social_domain: { <<: *domain, url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/category-social-media-!cn.mrs" }
+  communication_domain: { <<: *domain, url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/category-communication.mrs" }
+  entertainment_domain: { <<: *domain, url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/category-entertainment.mrs" }
+  gfw_domain: { <<: *domain, url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/gfw.mrs" }
   youtube_domain: { <<: *domain, url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/youtube.mrs"}
   google_domain: { <<: *domain, url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/google.mrs"}
   github_domain: { <<: *domain, url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/github.mrs"}
@@ -213,3 +229,13 @@ rule-providers:
   telegram_ip: { <<: *ip, url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geoip/telegram.mrs"}
   netflix_ip: { <<: *ip, url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geoip/netflix.mrs"}
   apple_ip: {<<: *ip, url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo-lite/geoip/apple.mrs"}
+  # 不直接放行非标准端口；默认仍跟随“漏网之鱼”，仅为常见下载/实时通讯端口提供独立观察与手动切换入口。
+  nonstandard_port:
+    type: inline
+    behavior: classical
+    payload:
+      - DST-PORT,3478-3481
+      - DST-PORT,5228
+      - DST-PORT,6881-6999
+      - DST-PORT,8080
+      - DST-PORT,8443
