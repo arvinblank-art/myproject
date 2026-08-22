@@ -97,6 +97,7 @@ proxy-groups:
 
   - {name: 💰 虚拟货币, type: select, proxies: [♻️ 台湾自动, 🇹🇼 台湾节点]}
   - {name: 🤖 ChatGPT, type: select, proxies: [♻️ 日本自动, 🇯🇵 日本节点, ♻️ 美国自动, 🇺🇲 美国节点]}
+  - {name: 🤖 其他 AI, type: select, proxies: [♻️ 香港自动, 🇭🇰 香港节点, ♻️ 日本自动, 🇯🇵 日本节点, ♻️ 台湾自动, 🇹🇼 台湾节点, ♻️ 美国自动, 🇺🇲 美国节点, ♻️ 狮城自动, 🇸🇬 狮城节点]}
   - {name: 🎥 NETFLIX, type: select, proxies: [♻️ 香港自动, 🇭🇰 香港节点]}
   - {name: 📹 YouTube, type: select, proxies: [♻️ 香港自动, ♻️ 日本自动, ♻️ 狮城自动, ♻️ 美国自动, ♻️ 自动选择, 🚀 默认代理, 直连]}
   - {name: 🍀 Google, type: select, proxies: [♻️ 香港自动, ♻️ 日本自动, 🚀 默认代理, 直连]}
@@ -165,7 +166,12 @@ rules:
   - DOMAIN-SUFFIX,openrice.com,🏦 香港服务
   - DOMAIN-SUFFIX,hktvmall.com,🏦 香港服务
   - DOMAIN-SUFFIX,cathaypacific.com,🏦 香港服务
-  - RULE-SET,ai,🤖 ChatGPT
+  # ChatGPT uses Japan with a US fallback; other AI uses the regional fallback order below.
+  - DOMAIN-SUFFIX,chatgpt.com,🤖 ChatGPT
+  - DOMAIN-SUFFIX,openai.com,🤖 ChatGPT
+  - DOMAIN-SUFFIX,oaistatic.com,🤖 ChatGPT
+  - DOMAIN-SUFFIX,oaiusercontent.com,🤖 ChatGPT
+  - RULE-SET,ai,🤖 其他 AI
   - RULE-SET,cryptocurrency,💰 虚拟货币
   - RULE-SET,github_domain,👨🏿‍💻 GitHub
   - RULE-SET,youtube_domain,📹 YouTube
