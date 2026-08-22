@@ -75,13 +75,13 @@ dns:
     - https://dns.google/dns-query#RULES
     - https://cloudflare-dns.com/dns-query#RULES
   nameserver-policy:
-    "rule-set:private_domain":
+    "geosite:private":
       - https://dns.alidns.com/dns-query
       - https://doh.pub/dns-query
-    "rule-set:cn_domain":
+    "geosite:cn":
       - https://dns.alidns.com/dns-query
       - https://doh.pub/dns-query
-    "rule-set:geolocation-!cn":
+    "geosite:geolocation-!cn":
       - https://dns.google/dns-query#RULES
       - https://cloudflare-dns.com/dns-query#RULES
   fake-ip-filter:
@@ -135,8 +135,9 @@ proxy-groups:
 
 # 规则匹配
 rules:
-  - RULE-SET,private_ip,直连,no-resolve
-  - RULE-SET,private_domain,直连
+  # 本地 GEO 优先：私网、核心应用、GFW 与中国流量由 geosite.dat / geoip.dat 判定。
+  - GEOIP,private,直连,no-resolve
+  - GEOSITE,private,直连
   - DOMAIN-SUFFIX,httpdns.aliyuncs.com,直连
   # Charles Schwab / 嘉信：保持本地出口，避免投资账户登录期间切换出口 IP。
   - DOMAIN-SUFFIX,schwab.com,直连
@@ -165,32 +166,32 @@ rules:
   - DOMAIN-SUFFIX,openrice.com,🏦 香港服务
   - DOMAIN-SUFFIX,hktvmall.com,🏦 香港服务
   - DOMAIN-SUFFIX,cathaypacific.com,🏦 香港服务
-  - RULE-SET,ai,🤖 ChatGPT
-  - RULE-SET,cryptocurrency,💰 虚拟货币
-  - RULE-SET,github_domain,👨🏿‍💻 GitHub
-  - RULE-SET,youtube_domain,📹 YouTube
-  - RULE-SET,google_domain,🍀 Google
-  - RULE-SET,onedrive_domain,🐬 OneDrive
-  - RULE-SET,microsoft_domain,🪟 Microsoft
-  - RULE-SET,apple_domain,直连
-  - RULE-SET,tiktok_domain,🎵 TikTok
-  - RULE-SET,telegram_domain,📲 Telegram
-  - RULE-SET,netflix_domain,🎥 NETFLIX
-  - RULE-SET,paypal_domain,💶 PayPal
+  - GEOSITE,category-ai-!cn,🤖 ChatGPT
+  - GEOSITE,category-cryptocurrency,💰 虚拟货币
+  - GEOSITE,github,👨🏿‍💻 GitHub
+  - GEOSITE,youtube,📹 YouTube
+  - GEOSITE,google,🍀 Google
+  - GEOSITE,onedrive,🐬 OneDrive
+  - GEOSITE,microsoft,🪟 Microsoft
+  - GEOSITE,apple,直连
+  - GEOSITE,tiktok,🎵 TikTok
+  - GEOSITE,telegram,📲 Telegram
+  - GEOSITE,netflix,🎥 NETFLIX
+  - GEOSITE,paypal,💶 PayPal
   # Telegram、TikTok、Netflix 已在前面精确匹配；这里承接其余社交与海外媒体。
   - RULE-SET,social_domain,💬 社交通讯
   - RULE-SET,communication_domain,💬 社交通讯
   - RULE-SET,entertainment_domain,🌍 海外媒体
-  - RULE-SET,apple_ip,直连
-  - RULE-SET,google_ip,🍀 Google
-  - RULE-SET,netflix_ip,🎥 NETFLIX
-  - RULE-SET,telegram_ip,📲 Telegram
+  - GEOIP,apple,直连,no-resolve
+  - GEOIP,google,🍀 Google,no-resolve
+  - GEOIP,netflix,🎥 NETFLIX,no-resolve
+  - GEOIP,telegram,📲 Telegram,no-resolve
   - DOMAIN-SUFFIX,qichiyu.com,🚀 默认代理
   - RULE-SET,proxylite,🚀 默认代理
-  - RULE-SET,gfw_domain,🧱 GFW 兜底
-  - RULE-SET,geolocation-!cn,🚀 默认代理
-  - RULE-SET,cn_domain,直连
-  - RULE-SET,cn_ip,直连
+  - GEOSITE,gfw,🧱 GFW 兜底
+  - GEOSITE,geolocation-!cn,🚀 默认代理
+  - GEOSITE,cn,直连
+  - GEOIP,CN,直连,no-resolve
   - RULE-SET,nonstandard_port,🔀 非标端口
   - MATCH,🐟 漏网之鱼
 
