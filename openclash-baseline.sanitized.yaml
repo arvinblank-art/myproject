@@ -93,16 +93,14 @@ dns:
 # 如果相应分组没有筛选到对应的国家，请根据自己节点名字调整筛选关键字。
 # 没有再使用锚点，是考虑很多新手修改难度，这样新手修改某个分组更容易些。
 proxy-groups:
-  - {name: 🚀 默认代理, type: select, proxies: [♻️ 自建自动, ♻️ 香港自动, ♻️ 日本自动, ♻️ 狮城自动, ♻️ 美国自动, ♻️ 自动选择, 🧩 自建节点, 🇭🇰 香港节点, 🇯🇵 日本节点, 🇸🇬 狮城节点, 🇹🇼 台湾节点, 🇺🇲 美国节点, 直连]}
-  - {name: 🧩 自建节点, type: select, proxies: [vl-reality-instance-20260808-145531, vm-ws-tls-instance-20260808-145531, hy2-instance-20260808-145531, tu5-instance-20260808-145531, anytls-instance-20260808-145531, al.ellison1208, aa.ellison1208.xyz, nw.ellison1208.xyz, zl.ellison1208.xyz, nk.ellison1208.xyz, 直连]}
-  - {name: ♻️ 自建自动, type: url-test, proxies: [vl-reality-instance-20260808-145531, vm-ws-tls-instance-20260808-145531, hy2-instance-20260808-145531, tu5-instance-20260808-145531, anytls-instance-20260808-145531, al.ellison1208, aa.ellison1208.xyz, nw.ellison1208.xyz, zl.ellison1208.xyz, nk.ellison1208.xyz], url: https://www.gstatic.com/generate_204, expected-status: 204, tolerance: 50, interval: 600, timeout: 5000, max-failed-times: 3, lazy: true}
+  - {name: 🚀 默认代理, type: select, proxies: [♻️ 香港自动, ♻️ 日本自动, ♻️ 狮城自动, ♻️ 美国自动, ♻️ 自动选择, 🇭🇰 香港节点, 🇯🇵 日本节点, 🇸🇬 狮城节点, 🇹🇼 台湾节点, 🇺🇲 美国节点, 直连]}
 
   - {name: 💰 虚拟货币, type: select, proxies: [♻️ 台湾自动, 🇹🇼 台湾节点]}
   - {name: 🤖 ChatGPT, type: select, proxies: [♻️ 日本自动, 🇯🇵 日本节点, ♻️ 美国自动, 🇺🇲 美国节点]}
   - {name: 🎥 NETFLIX, type: select, proxies: [♻️ 香港自动, 🇭🇰 香港节点]}
   - {name: 📹 YouTube, type: select, proxies: [♻️ 香港自动, ♻️ 日本自动, ♻️ 狮城自动, ♻️ 美国自动, ♻️ 自动选择, 🚀 默认代理, 直连]}
-  - {name: 🍀 Google, type: select, proxies: [♻️ 自建自动, ♻️ 香港自动, ♻️ 日本自动, 🚀 默认代理, 直连]}
-  - {name: 👨🏿‍💻 GitHub, type: select, proxies: [♻️ 自建自动, ♻️ 日本自动, ♻️ 香港自动, 🚀 默认代理, 直连]}
+  - {name: 🍀 Google, type: select, proxies: [♻️ 香港自动, ♻️ 日本自动, 🚀 默认代理, 直连]}
+  - {name: 👨🏿‍💻 GitHub, type: select, proxies: [♻️ 日本自动, ♻️ 香港自动, 🚀 默认代理, 直连]}
   - {name: 🐬 OneDrive, type: select, proxies: [直连, 🚀 默认代理, ♻️ 香港自动, ♻️ 日本自动]}
   - {name: 🪟 Microsoft, type: select, proxies: [直连, 🚀 默认代理, ♻️ 香港自动, ♻️ 日本自动]}
   - {name: 🎵 TikTok, type: select, proxies: [♻️ 日本自动, ♻️ 狮城自动, ♻️ 美国自动, 🚀 默认代理, 直连]}
@@ -112,7 +110,7 @@ proxy-groups:
   - {name: 💹 IBKR, type: select, proxies: [🇺🇲 美国节点, ♻️ 美国自动]}
   # 香港银行及常用香港 App：银行登录期间优先固定节点，避免自动切换出口 IP。
   - {name: 🏦 香港服务, type: select, proxies: [🇭🇰 香港节点, ♻️ 香港自动, 直连]}
-  - {name: 🐟 漏网之鱼, type: select, proxies: [🚀 默认代理, ♻️ 自建自动, ♻️ 香港自动, ♻️ 日本自动, ♻️ 狮城自动, ♻️ 美国自动, ♻️ 自动选择, 直连]}
+  - {name: 🐟 漏网之鱼, type: select, proxies: [🚀 默认代理, ♻️ 香港自动, ♻️ 日本自动, ♻️ 狮城自动, ♻️ 美国自动, ♻️ 自动选择, 直连]}
 
   - {name: 🇭🇰 香港节点, type: select, include-all: true, filter: "(?=.*(港|HK|(?i)Hong))^((?!(台|日|韩|新|深|美)).)*$"}
   - {name: 🇯🇵 日本节点, type: select, include-all: true, filter: "(?=.*(日|JP|(?i)Japan))^((?!(港|台|韩|新|美)).)*$", exclude-filter: "cheap \\| 🇯🇵日本东京0[1-5]"}
