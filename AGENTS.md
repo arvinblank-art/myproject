@@ -20,14 +20,15 @@ These rules are mandatory for every OpenClash, Shadowrocket, DNS, Lucky, or rout
 ## OpenClash and Shadowrocket release rules
 
 1. `D:\workspace\myproject` is the sole Git working baseline. Do not use other folders as competing sources of truth.
-2. Before applying production changes: create candidate -> validate syntax/rule targets -> review delta -> commit and push Git -> upload/apply -> runtime verification.
-3. Version names must be unique and explicit: `openclash-v<N>-<purpose>-YYYYMMDD.yaml` and `shadowrocket-v<N>-<purpose>-YYYYMMDD.conf`.
-4. Keep exactly two live router configurations: the active version and immediately previous version. Keep older history in Git, not in the router configuration list.
-5. Never reuse a version filename for different content. Never delete the previous version until the new version has passed all runtime checks.
-6. Shadowrocket is separately generated but must match the approved OpenClash routing intent where supported.
-7. Public Git files must not contain subscriptions, node endpoints, credentials, tokens, private host aliases, or personal identifiers.
-8. Do not deploy a candidate merely because it imports or parses. Verify active core status, expected selectors/rules in Zashboard, target-domain behavior, and unaffected critical services before marking it released.
-9. Do not silently sync a live router change into Git after the fact. Git must contain the reviewed candidate and backup/reference before the live apply.
+2. **Mandatory release gate — no router-first edits:** for every routing, DNS, GEO, proxy-group, or rule change, the only normal order is: (a) create a new, explicitly versioned sanitized OpenClash candidate in this repository; (b) generate or update the matching sanitized Shadowrocket candidate; (c) validate syntax and rule targets, review the delta, then commit and push both to Git; (d) create the corresponding private deployment copy under `D:\document\openclash`; (e) upload/apply that private copy to the router; (f) perform runtime verification. Direct edits to the active router YAML are diagnostic-only and require an explicit emergency-recovery instruction from the user.
+3. If Git, Shadowrocket, the private deployment copy, and the live router differ, stop and reconcile them before making another production change. Do not silently backfill a router-only edit into Git after the fact.
+4. The release handoff must state the Git commit, private backup/deployment path, active router YAML, rollback YAML, and runtime-verification result.
+5. Version names must be unique and explicit: `openclash-v<N>-<purpose>-YYYYMMDD.yaml` and `shadowrocket-v<N>-<purpose>-YYYYMMDD.conf`.
+6. Keep exactly two live router configurations: the active version and immediately previous version. Keep older history in Git and `D:\document\openclash`, not in the router configuration list.
+7. Never reuse a version filename for different content. Never delete the previous version until the new version has passed all runtime checks.
+8. Shadowrocket is separately generated but must match the approved OpenClash routing intent where supported.
+9. Public Git files must not contain subscriptions, node endpoints, credentials, tokens, private host aliases, or personal identifiers.
+10. Do not deploy a candidate merely because it imports or parses. Verify active core status, expected selectors/rules in Zashboard, target-domain behavior, and unaffected critical services before marking it released.
 
 ## Internal HTTPS hostnames
 
