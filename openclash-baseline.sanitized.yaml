@@ -110,8 +110,10 @@ proxy-groups:
   - {name: 💬 社交通讯, type: select, proxies: [🚀 默认代理, ♻️ 狮城自动, ♻️ 日本自动, ♻️ 美国自动, 直连]}
   - {name: 🌍 海外媒体, type: select, proxies: [🚀 默认代理, ♻️ 香港自动, ♻️ 日本自动, ♻️ 狮城自动, ♻️ 美国自动, 直连]}
   - {name: 💶 PayPal, type: select, proxies: [🇯🇵 日本节点, ♻️ 日本自动]}
-  # Interactive Brokers / IBKR：默认固定美国节点，保留美国自动作故障备用。
-  - {name: 💹 IBKR, type: select, proxies: [🇺🇲 美国节点, ♻️ 美国自动]}
+  # Finance: stable direct routing with manual Hong Kong fallback only.
+  - {name: 💼 iFAST, type: select, proxies: [直连, 🇭🇰 香港节点]}
+  - {name: 🏦 嘉信, type: select, proxies: [直连, 🇭🇰 香港节点]}
+  - {name: 💹 IBKR（直连）, type: select, proxies: [直连, 🇭🇰 香港节点]}
   # 香港银行及常用香港 App：银行登录期间优先固定节点，避免自动切换出口 IP。
   - {name: 🏦 香港服务, type: select, proxies: [🇭🇰 香港节点, ♻️ 香港自动, 直连]}
   # 多层兜底：应用规则未覆盖时先进入 GFW 组；非标准端口仅作为可观察、可切换的末级兜底。
@@ -139,14 +141,14 @@ rules:
   - RULE-SET,private_ip,直连,no-resolve
   - RULE-SET,private_domain,直连
   - DOMAIN-SUFFIX,httpdns.aliyuncs.com,直连
-  # Charles Schwab / 嘉信：保持本地出口，避免投资账户登录期间切换出口 IP。
-  - DOMAIN-SUFFIX,schwab.com,直连
-  - DOMAIN-SUFFIX,schwabcdn.com,直连
-  - DOMAIN-SUFFIX,schwabplan.com,直连
-  - DOMAIN-SUFFIX,thinkorswim.com,直连
-  # Interactive Brokers / IBKR：交易与登录服务使用美国出口。
-  - DOMAIN-SUFFIX,interactivebrokers.com,💹 IBKR
-  - DOMAIN-SUFFIX,ibkr.com,💹 IBKR
+  # Finance: direct by default; Hong Kong is a manual fallback.
+  - DOMAIN-SUFFIX,ifastgb.com,💼 iFAST
+  - DOMAIN-SUFFIX,schwab.com,🏦 嘉信
+  - DOMAIN-SUFFIX,schwabcdn.com,🏦 嘉信
+  - DOMAIN-SUFFIX,schwabplan.com,🏦 嘉信
+  - DOMAIN-SUFFIX,thinkorswim.com,🏦 嘉信
+  - DOMAIN-SUFFIX,interactivebrokers.com,💹 IBKR（直连）
+  - DOMAIN-SUFFIX,ibkr.com,💹 IBKR（直连）
   - DOMAIN,frontier100-toutiao-lf.fqnovel.com,🚀 默认代理
   # 香港地区域名（包括大部分银行、政府及本地 App）。
   - DOMAIN-SUFFIX,hk,🏦 香港服务
