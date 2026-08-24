@@ -1,0 +1,260 @@
+# Sanitized OpenClash/Mihomo routing baseline.
+# Proxy providers, server endpoints, UUIDs, passwords, and update URLs are intentionally excluded.
+# Add node credentials only on the router; do not commit them to Git.
+proxies:
+  - {name: 直连, type: direct}
+
+mixed-port: 7890
+allow-lan: true
+bind-address: "*"
+ipv6: false
+unified-delay: true
+tcp-concurrent: true
+log-level: warning
+keep-alive-idle: 600
+keep-alive-interval: 15
+profile:
+  store-selected: true
+  store-fake-ip: true
+
+# 为防止使用插件朋友遇到面板问题，我注释掉了此模块。
+#external-controller: 0.0.0.0:9090
+#secret: ""
+#external-ui: ui
+#external-ui-name: zashboard
+#external-ui-url: "https://github.com/Zephyruso/zashboard/archive/refs/heads/gh-pages.zip"
+
+# 嗅探（fakeip下其实可以不用嗅探）
+sniffer:
+  enable: true
+  sniff:
+    HTTP:
+      ports: [80, 8080-8880]
+      override-destination: true
+    TLS:
+      ports: [443, 8443]
+    QUIC:
+      ports: [443, 8443]
+  skip-domain:
+    - "Mijia Cloud"
+    - "+.push.apple.com"
+
+# 入站
+tun:
+  enable: true
+  # system/gvisor/mixed
+  stack: mixed
+  dns-hijack: ["any:53", "tcp://any:53"]
+  #使用nikki，混入全部不修改的情况，开启接口指定为nikki
+  #device: nikki
+  #使用仅内核自行修改下面三项为true
+  auto-route: false
+  auto-redirect: false
+  auto-detect-interface: false
+
+# DNS模块
+dns:
+  enable: true
+  cache-algorithm: arc
+  listen: 0.0.0.0:1053
+  ipv6: false
+  respect-rules: true
+  enhanced-mode: fake-ip
+  fake-ip-range: 198.18.0.1/16
+  fake-ip-filter-mode: blacklist
+  default-nameserver:
+    - 223.5.5.5
+    - 119.29.29.29
+  proxy-server-nameserver:
+    - https://dns.alidns.com/dns-query
+    - https://doh.pub/dns-query
+  direct-nameserver:
+    - https://dns.alidns.com/dns-query
+    - https://doh.pub/dns-query
+  direct-nameserver-follow-policy: true
+  nameserver:
+    - https://dns.google/dns-query#RULES
+    - https://cloudflare-dns.com/dns-query#RULES
+  nameserver-policy:
+    "rule-set:private_domain":
+      - https://dns.alidns.com/dns-query
+      - https://doh.pub/dns-query
+    "rule-set:cn_domain":
+      - https://dns.alidns.com/dns-query
+      - https://doh.pub/dns-query
+    "rule-set:geolocation-!cn":
+      - https://dns.google/dns-query#RULES
+      - https://cloudflare-dns.com/dns-query#RULES
+  fake-ip-filter:
+    - "rule-set:fakeipfilter_domain"
+    - "resolvers.httpdns.aliyuncs.com"
+    - "+.httpdns.aliyuncs.com"
+
+# 出站策略，根据自己情况调整每个策略里分组排序，增删都可以，比如把美国自动放到第一个，比如删除香港故转，注意别漏掉表情逗号等。
+# 如果相应分组没有筛选到对应的国家，请根据自己节点名字调整筛选关键字。
+# 没有再使用锚点，是考虑很多新手修改难度，这样新手修改某个分组更容易些。
+proxy-groups:
+  - {name: 🚀 默认代理, type: select, proxies: [♻️ 香港自动, ♻️ 日本自动, ♻️ 狮城自动, ♻️ 美国自动, ♻️ 自动选择, 🇭🇰 香港节点, 🇯🇵 日本节点, 🇸🇬 狮城节点, 🇹🇼 台湾节点, 🇺🇲 美国节点, 🧩 自建节点, ♻️ 自建自动, 直连]}
+  # Public/sanitized fallback groups: private deployment supplies the actual self-hosted node aliases.
+  - {name: 🧩 自建节点, type: select, include-all: true, filter: "(?i)(自建|self[- ]?hosted)"}
+  - {name: ♻️ 自建自动, type: url-test, include-all: true, url: https://www.gstatic.com/generate_204, expected-status: 204, tolerance: 50, interval: 600, timeout: 5000, max-failed-times: 3, lazy: true, filter: "(?i)(自建|self[- ]?hosted)"}
+
+  - {name: 💰 虚拟货币, type: select, proxies: [♻️ 台湾自动, 🇹🇼 台湾节点, 🧩 自建节点, ♻️ 自建自动]}
+  - {name: 🤖 ChatGPT, type: select, proxies: [♻️ 日本自动, 🇯🇵 日本节点, ♻️ 美国自动, 🇺🇲 美国节点, 🧩 自建节点, ♻️ 自建自动]}
+  - {name: 🤖 其他 AI, type: select, proxies: [♻️ 香港自动, 🇭🇰 香港节点, ♻️ 日本自动, 🇯🇵 日本节点, ♻️ 台湾自动, 🇹🇼 台湾节点, ♻️ 美国自动, 🇺🇲 美国节点, ♻️ 狮城自动, 🇸🇬 狮城节点, 🧩 自建节点, ♻️ 自建自动]}
+  - {name: 🎥 NETFLIX, type: select, proxies: [♻️ 香港自动, 🇭🇰 香港节点, 🧩 自建节点, ♻️ 自建自动]}
+  - {name: 📹 YouTube, type: select, proxies: [♻️ 香港自动, ♻️ 日本自动, ♻️ 狮城自动, ♻️ 美国自动, ♻️ 自动选择, 🚀 默认代理, 直连, 🧩 自建节点, ♻️ 自建自动]}
+  - {name: 🍀 Google, type: select, proxies: [♻️ 香港自动, ♻️ 日本自动, 🚀 默认代理, 直连, 🧩 自建节点, ♻️ 自建自动]}
+  - {name: 👨🏿‍💻 GitHub, type: select, proxies: [♻️ 日本自动, ♻️ 香港自动, 🚀 默认代理, 直连, 🧩 自建节点, ♻️ 自建自动]}
+  - {name: 🐬 OneDrive, type: select, proxies: [直连, 🚀 默认代理, ♻️ 香港自动, ♻️ 日本自动, 🧩 自建节点, ♻️ 自建自动]}
+  - {name: 🪟 Microsoft, type: select, proxies: [直连, 🚀 默认代理, ♻️ 香港自动, ♻️ 日本自动, 🧩 自建节点, ♻️ 自建自动]}
+  - {name: 🎵 TikTok, type: select, proxies: [♻️ 日本自动, ♻️ 狮城自动, ♻️ 美国自动, 🚀 默认代理, 直连, 🧩 自建节点, ♻️ 自建自动]}
+  - {name: 📲 Telegram, type: select, proxies: [♻️ 狮城自动, ♻️ 香港自动, ♻️ 日本自动, 🚀 默认代理, 直连, 🧩 自建节点, ♻️ 自建自动]}
+  # 社交/通讯与媒体采用应用组，默认继续下沉到默认代理的国家测速组。
+  - {name: 💬 社交通讯, type: select, proxies: [🚀 默认代理, ♻️ 狮城自动, ♻️ 日本自动, ♻️ 美国自动, 直连, 🧩 自建节点, ♻️ 自建自动]}
+  - {name: 🌍 海外媒体, type: select, proxies: [🚀 默认代理, ♻️ 香港自动, ♻️ 日本自动, ♻️ 狮城自动, ♻️ 美国自动, 直连, 🧩 自建节点, ♻️ 自建自动]}
+  - {name: 💶 PayPal, type: select, proxies: [🇯🇵 日本节点, ♻️ 日本自动, 🧩 自建节点, ♻️ 自建自动]}
+  # Finance: fixed Hong Kong first, Hong Kong auto second, then self-hosted fallbacks.
+  - {name: 💼 iFAST, type: select, proxies: [🇭🇰 香港节点, ♻️ 香港自动, 🧩 自建节点, ♻️ 自建自动]}
+  - {name: 🏦 嘉信, type: select, proxies: [🇭🇰 香港节点, ♻️ 香港自动, 🧩 自建节点, ♻️ 自建自动]}
+  - {name: 💹 IBKR, type: select, proxies: [🇭🇰 香港节点, ♻️ 香港自动, 🧩 自建节点, ♻️ 自建自动]}
+  # 香港银行及常用香港 App：银行登录期间优先固定节点，避免自动切换出口 IP。
+  - {name: 🏦 香港服务, type: select, proxies: [🇭🇰 香港节点, ♻️ 香港自动, 直连, 🧩 自建节点, ♻️ 自建自动]}
+  # 多层兜底：应用规则未覆盖时先进入 GFW 组；非标准端口仅作为可观察、可切换的末级兜底。
+  - {name: 🧱 GFW 兜底, type: select, proxies: [🚀 默认代理, ♻️ 香港自动, ♻️ 日本自动, ♻️ 狮城自动, ♻️ 美国自动, 直连, 🧩 自建节点, ♻️ 自建自动]}
+  - {name: 🔀 非标端口, type: select, proxies: [🐟 漏网之鱼, 直连, 🚀 默认代理, 🧩 自建节点, ♻️ 自建自动]}
+  - {name: 🐟 漏网之鱼, type: select, proxies: [🚀 默认代理, ♻️ 香港自动, ♻️ 日本自动, ♻️ 狮城自动, ♻️ 美国自动, ♻️ 自动选择, 直连, 🧩 自建节点, ♻️ 自建自动]}
+
+  - {name: 🇭🇰 香港节点, type: select, include-all: true, filter: "(?=.*(港|HK|(?i)Hong))^((?!(台|日|韩|新|深|美)).)*$"}
+  - {name: 🇯🇵 日本节点, type: select, include-all: true, filter: "(?=.*(日|JP|(?i)Japan))^((?!(港|台|韩|新|美)).)*$", exclude-filter: "cheap \\| 🇯🇵日本东京0[1-5]"}
+  - {name: 🇸🇬 狮城节点, type: select, include-all: true, filter: "(?=.*(新加坡|坡|狮城|SG|Singapore))^((?!(台|日|韩|深|美)).)*$"}
+  - {name: 🇹🇼 台湾节点, type: select, include-all: true, filter: "(?=.*(台|TW|(?i)Taiwan))^((?!(港|日|韩|新|美)).)*$"}
+  - {name: 🇺🇲 美国节点, type: select, include-all: true, filter: "(?=.*(美|US|(?i)States|America))^((?!(港|台|韩|新|日)).)*$"}
+
+  - {name: ♻️ 香港自动, type: url-test, include-all: true, url: https://www.gstatic.com/generate_204, expected-status: 204, tolerance: 50, interval: 600, timeout: 5000, max-failed-times: 3, lazy: true, filter: "(?=.*(港|HK|(?i)Hong))^((?!(台|日|韩|新|深|美)).)*$"}
+  - {name: ♻️ 日本自动, type: url-test, include-all: true, url: https://www.gstatic.com/generate_204, expected-status: 204, tolerance: 50, interval: 600, timeout: 5000, max-failed-times: 3, lazy: true, filter: "(?=.*(日|JP|(?i)Japan))^((?!(港|台|韩|新|美)).)*$", exclude-filter: "cheap \\| 🇯🇵日本东京0[1-5]"}
+  - {name: ♻️ 狮城自动, type: url-test, include-all: true, url: https://www.gstatic.com/generate_204, expected-status: 204, tolerance: 50, interval: 600, timeout: 5000, max-failed-times: 3, lazy: true, filter: "(?=.*(新加坡|坡|狮城|SG|Singapore))^((?!(台|日|韩|深|美)).)*$"}
+  - {name: ♻️ 台湾自动, type: url-test, include-all: true, url: https://www.gstatic.com/generate_204, expected-status: 204, tolerance: 50, interval: 600, timeout: 5000, max-failed-times: 3, lazy: true, filter: "(?=.*(台|TW|(?i)Taiwan))^((?!(港|日|韩|新|美)).)*$"}
+  - {name: ♻️ 美国自动, type: url-test, include-all: true, url: https://www.gstatic.com/generate_204, expected-status: 204, tolerance: 50, interval: 600, timeout: 5000, max-failed-times: 3, lazy: true, filter: "(?=.*(美|US|(?i)States|America))^((?!(港|台|日|韩|新)).)*$"}
+  - {name: ♻️ 自动选择, type: url-test, include-all: true, url: https://www.gstatic.com/generate_204, expected-status: 204, tolerance: 50, interval: 600, timeout: 5000, max-failed-times: 3, lazy: true, filter: "^((?!(直连)).)*$"}
+  - {name: 🌐 全部节点, type: select, include-all: true, hidden: true}
+
+
+# 规则匹配
+rules:
+  - RULE-SET,private_ip,直连,no-resolve
+  - RULE-SET,private_domain,直连
+  - DOMAIN-SUFFIX,httpdns.aliyuncs.com,直连
+  # Explicit mainland services precede all finance and generic rules.
+  - DOMAIN-SUFFIX,taobao.com,直连
+  - DOMAIN-SUFFIX,tmall.com,直连
+  - DOMAIN-SUFFIX,taobaocdn.com,直连
+  - DOMAIN-SUFFIX,alipay.com,直连
+  - DOMAIN-SUFFIX,alipaydns.com,直连
+  - DOMAIN-SUFFIX,alipayobjects.com,直连
+  # Finance: fixed Hong Kong, then Hong Kong auto and self-hosted fallbacks.
+  - DOMAIN-SUFFIX,ifastgb.com,💼 iFAST
+  - DOMAIN-SUFFIX,schwab.com,🏦 嘉信
+  - DOMAIN-SUFFIX,schwabcdn.com,🏦 嘉信
+  - DOMAIN-SUFFIX,schwabplan.com,🏦 嘉信
+  - DOMAIN-SUFFIX,thinkorswim.com,🏦 嘉信
+  - DOMAIN-SUFFIX,interactivebrokers.com,💹 IBKR
+  - DOMAIN-SUFFIX,ibkr.com,💹 IBKR
+  - DOMAIN,frontier100-toutiao-lf.fqnovel.com,🚀 默认代理
+  # 香港地区域名（包括大部分银行、政府及本地 App）。
+  - DOMAIN-SUFFIX,hk,🏦 香港服务
+  # 使用 .com/.bank 等非 .hk 域名的香港银行与常用 App。
+  - DOMAIN-SUFFIX,hangseng.com,🏦 香港服务
+  - DOMAIN-SUFFIX,bochk.com,🏦 香港服务
+  - DOMAIN-SUFFIX,hkbea.com,🏦 香港服务
+  - DOMAIN-SUFFIX,dahsing.com,🏦 香港服务
+  - DOMAIN-SUFFIX,cmbwinglungbank.com,🏦 香港服务
+  - DOMAIN-SUFFIX,mox.com,🏦 香港服务
+  - DOMAIN-SUFFIX,welab.bank,🏦 香港服务
+  - DOMAIN-SUFFIX,fusionbank.com,🏦 香港服务
+  - DOMAIN-SUFFIX,za.group,🏦 香港服务
+  - DOMAIN-SUFFIX,airstarbank.com,🏦 香港服务
+  - DOMAIN-SUFFIX,chbank.com,🏦 香港服务
+  - DOMAIN-SUFFIX,alipayhk.com,🏦 香港服务
+  - DOMAIN-SUFFIX,openrice.com,🏦 香港服务
+  - DOMAIN-SUFFIX,hktvmall.com,🏦 香港服务
+  - DOMAIN-SUFFIX,cathaypacific.com,🏦 香港服务
+  # ChatGPT uses Japan with a US fallback; other AI uses the regional fallback order below.
+  - DOMAIN-SUFFIX,chatgpt.com,🤖 ChatGPT
+  - DOMAIN-SUFFIX,openai.com,🤖 ChatGPT
+  - DOMAIN-SUFFIX,oaistatic.com,🤖 ChatGPT
+  - DOMAIN-SUFFIX,oaiusercontent.com,🤖 ChatGPT
+  - RULE-SET,ai,🤖 其他 AI
+  - RULE-SET,cryptocurrency,💰 虚拟货币
+  - RULE-SET,github_domain,👨🏿‍💻 GitHub
+  - RULE-SET,youtube_domain,📹 YouTube
+  - RULE-SET,google_domain,🍀 Google
+  - RULE-SET,onedrive_domain,🐬 OneDrive
+  - RULE-SET,microsoft_domain,🪟 Microsoft
+  - RULE-SET,apple_domain,直连
+  - RULE-SET,tiktok_domain,🎵 TikTok
+  - RULE-SET,telegram_domain,📲 Telegram
+  - RULE-SET,netflix_domain,🎥 NETFLIX
+  - RULE-SET,paypal_domain,💶 PayPal
+  # Telegram、TikTok、Netflix 已在前面精确匹配；这里承接其余社交与海外媒体。
+  - RULE-SET,social_domain,💬 社交通讯
+  - RULE-SET,communication_domain,💬 社交通讯
+  - RULE-SET,entertainment_domain,🌍 海外媒体
+  - RULE-SET,apple_ip,直连
+  - RULE-SET,google_ip,🍀 Google
+  - RULE-SET,netflix_ip,🎥 NETFLIX
+  - RULE-SET,telegram_ip,📲 Telegram
+  - DOMAIN-SUFFIX,qichiyu.com,🚀 默认代理
+  - RULE-SET,proxylite,🚀 默认代理
+  - RULE-SET,gfw_domain,🧱 GFW 兜底
+  - RULE-SET,geolocation-!cn,🚀 默认代理
+  - RULE-SET,cn_domain,直连
+  - RULE-SET,cn_ip,直连
+  - RULE-SET,nonstandard_port,🔀 非标端口
+  - MATCH,🐟 漏网之鱼
+
+# 规则集
+## type：可选http/file/inline  behavior：可选domain/ipcidr/classical format：可选yaml/text/mrs
+rule-anchor:
+  ip: &ip {type: http, interval: 86400, behavior: ipcidr, format: mrs}
+  domain: &domain {type: http, interval: 86400, behavior: domain, format: mrs}
+  class: &class {type: http, interval: 86400, format: text, behavior: classical}
+rule-providers:
+  fakeipfilter_domain: {<<: *domain, url: "https://raw.githubusercontent.com/wwqgtxx/clash-rules/release/fakeip-filter.mrs"}
+  private_domain: { <<: *domain, url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/private.mrs"}
+  proxylite: { <<: *class, url: "https://raw.githubusercontent.com/qichiyuhub/rule/refs/heads/main/rules/proxy.list"}
+  ai: { <<: *domain, url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/category-ai-!cn.mrs" }
+  cryptocurrency: { <<: *domain, url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/category-cryptocurrency.mrs" }
+  social_domain: { <<: *domain, url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/category-social-media-!cn.mrs" }
+  communication_domain: { <<: *domain, url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/category-communication.mrs" }
+  entertainment_domain: { <<: *domain, url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/category-entertainment.mrs" }
+  gfw_domain: { <<: *domain, url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/gfw.mrs" }
+  youtube_domain: { <<: *domain, url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/youtube.mrs"}
+  google_domain: { <<: *domain, url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/google.mrs"}
+  github_domain: { <<: *domain, url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/github.mrs"}
+  telegram_domain: { <<: *domain, url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/telegram.mrs"}
+  netflix_domain: { <<: *domain, url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/netflix.mrs"}
+  paypal_domain: { <<: *domain, url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/paypal.mrs"}
+  onedrive_domain: { <<: *domain, url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/onedrive.mrs"}
+  microsoft_domain: { <<: *domain, url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/microsoft.mrs"}
+  apple_domain: { <<: *domain, url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/apple.mrs"}
+  tiktok_domain: { <<: *domain, url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/tiktok.mrs"}
+  geolocation-!cn: { <<: *domain, url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/geolocation-!cn.mrs"}
+  cn_domain: { <<: *domain, url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/cn.mrs"}
+
+  private_ip: {<<: *ip, url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geoip/private.mrs"}
+  cn_ip: { <<: *ip, url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geoip/cn.mrs"}
+  google_ip: { <<: *ip, url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geoip/google.mrs"}
+  telegram_ip: { <<: *ip, url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geoip/telegram.mrs"}
+  netflix_ip: { <<: *ip, url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geoip/netflix.mrs"}
+  apple_ip: {<<: *ip, url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo-lite/geoip/apple.mrs"}
+  # 不直接放行非标准端口；默认仍跟随“漏网之鱼”，仅为常见下载/实时通讯端口提供独立观察与手动切换入口。
+  nonstandard_port:
+    type: inline
+    behavior: classical
+    payload:
+      - DST-PORT,3478-3481
+      - DST-PORT,5228
+      - DST-PORT,6881-6999
+      - DST-PORT,8080
+      - DST-PORT,8443
