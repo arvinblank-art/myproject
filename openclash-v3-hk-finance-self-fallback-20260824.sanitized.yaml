@@ -152,6 +152,8 @@ rules:
   - DOMAIN-SUFFIX,alipay.com,直连
   - DOMAIN-SUFFIX,alipaydns.com,直连
   - DOMAIN-SUFFIX,alipayobjects.com,直连
+  # Bitget partner/affiliate hostname is absent from the upstream cryptocurrency category.
+  - DOMAIN-SUFFIX,bitget.cafe,💰 虚拟货币
   # Finance: fixed Hong Kong, then Hong Kong auto and self-hosted fallbacks.
   - DOMAIN-SUFFIX,ifastgb.com,💼 iFAST（香港）
   - DOMAIN-SUFFIX,schwab.com,🏦 嘉信（香港）
