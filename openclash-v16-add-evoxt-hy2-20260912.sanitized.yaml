@@ -1,0 +1,987 @@
+---
+proxy-providers:
+  duck:
+    url: "<REDACTED_URL>"
+    type: http
+    interval: 86400
+    health-check:
+      enable: true
+      url: "<REDACTED_URL>"
+      interval: 600
+      lazy: true
+      timeout: 5000
+      expected-status: 204
+    proxy: 直连
+    override:
+      additional-prefix: 'duck | '
+    exclude-filter: "(?i)剩余|流量|套餐|到期|官网|客服|群组|通知|重置"
+  Sky:
+    url: "<REDACTED_URL>"
+    type: http
+    interval: 86400
+    health-check:
+      enable: true
+      url: "<REDACTED_URL>"
+      interval: 600
+      lazy: true
+      timeout: 5000
+      expected-status: 204
+    proxy: 直连
+    override:
+      additional-prefix: 'Sky | '
+    exclude-filter: "(?i)剩余|流量|套餐|到期|官网|客服|群组|通知|重置"
+  ykk:
+    url: "<REDACTED_URL>"
+    type: http
+    interval: 86400
+    health-check:
+      enable: true
+      url: "<REDACTED_URL>"
+      interval: 600
+      lazy: true
+      timeout: 5000
+      expected-status: 204
+    proxy: 直连
+    override:
+      additional-prefix: 'ykk | '
+    exclude-filter: "(?i)剩余|流量|套餐|到期|官网|客服|群组|通知|重置"
+  机场4:
+    url: "<REDACTED_URL>"
+    type: http
+    interval: 86400
+    health-check:
+      enable: true
+      url: "<REDACTED_URL>"
+      interval: 600
+      lazy: true
+      timeout: 5000
+      expected-status: 204
+    proxy: 直连
+    override:
+      additional-prefix: '机场4 | '
+    exclude-filter: "(?i)剩余|流量|套餐|到期|官网|客服|群组|通知|重置"
+proxies:
+- name: "\U0001F1EF\U0001F1F5 自建 Evoxt Osaka Reality"
+  type: vless
+  server: <EVOXT_SERVER_IP>
+  port: 443
+  uuid: "<REDACTED_UUID>"
+  network: tcp
+  udp: true
+  tls: true
+  servername: www.microsoft.com
+  client-fingerprint: chrome
+  flow: xtls-rprx-vision
+  reality-opts:
+    public-key: yxmD63szxV1yBVozdTqPZGz1SsSiLr7DFHpp1zmMdn8
+    short-id: "<REDACTED_SHORT_ID>"
+- name: "\U0001F1EF\U0001F1F5 自建 Osaka Reality"
+  type: vless
+  server: 38.47.98.65
+  port: 443
+  uuid: "<REDACTED_UUID>"
+  network: tcp
+  udp: true
+  tls: true
+  servername: www.microsoft.com
+  client-fingerprint: chrome
+  flow: xtls-rprx-vision
+  reality-opts:
+    public-key: 66-tcvmrodkRHNKAPMweqFh66PQ4cHegeban0DhwHk4
+    short-id: "<REDACTED_SHORT_ID>"
+- name: 直连
+  type: direct
+- name: vl-reality-instance-20260808-145531
+  type: vless
+  server: 35.212.162.124
+  port: 39279
+  uuid: "<REDACTED_UUID>"
+  udp: true
+  tls: true
+  network: tcp
+  servername: apple.com
+  flow: xtls-rprx-vision
+  client-fingerprint: chrome
+  reality-opts:
+    public-key: N9_T-tc1r6qj0PsTewOZ-qWDrbPSzE0f8NS_egNsqD8
+    short-id: "<REDACTED_SHORT_ID>"
+- name: anytls-instance-20260808-145531
+  type: anytls
+  server: gcld.viggosimple.top
+  port: 47252
+  password: "<REDACTED_PASSWORD>"
+  sni: gcld.viggosimple.top
+  skip-cert-verify: false
+- name: al.ellison1208
+  type: vless
+  server: al.ellison1208.xyz
+  port: 10086
+  uuid: "<REDACTED_UUID>"
+  udp: true
+  tls: true
+  network: tcp
+  servername: al.ellison1208.xyz
+  alpn:
+  - h2
+  - http/1.1
+- name: aa.ellison1208.xyz
+  type: vless
+  server: aa.ellison1208.xyz
+  port: 8443
+  uuid: "<REDACTED_UUID>"
+  udp: true
+  tls: true
+  network: tcp
+  servername: www.cloudflare.com
+  flow: xtls-rprx-vision
+  client-fingerprint: chrome
+  reality-opts:
+    public-key: DJ1vQ0AgooNlAMljYTfKyrd-irZoIHXEXmED2K77an8
+    short-id: "<REDACTED_SHORT_ID>"
+    spider-x: "/"
+- name: nw.ellison1208.xyz
+  type: vless
+  server: nw.ellison1208.xyz
+  port: 8443
+  uuid: "<REDACTED_UUID>"
+  udp: true
+  tls: true
+  network: tcp
+  servername: www.cloudflare.com
+  flow: xtls-rprx-vision
+  client-fingerprint: chrome
+  reality-opts:
+    public-key: 6jaqWcPGLZLHCmzG1iWi038IBPqYSND98-EJALJW5iM
+    short-id: "<REDACTED_SHORT_ID>"
+    spider-x: "/"
+- name: zl.ellison1208.xyz
+  type: vless
+  server: zl.ellison1208.xyz
+  port: 8443
+  uuid: "<REDACTED_UUID>"
+  udp: true
+  tls: true
+  network: tcp
+  servername: www.cloudflare.com
+  flow: xtls-rprx-vision
+  client-fingerprint: chrome
+  reality-opts:
+    public-key: fziGzJLCFNefmwYQd-O8fMiuRxTXxjiCjAnaueU7XGM
+    short-id: "<REDACTED_SHORT_ID>"
+    spider-x: "/"
+- name: nk.ellison1208.xyz
+  type: vless
+  server: nk.ellison1208.xyz
+  port: 8443
+  uuid: "<REDACTED_UUID>"
+  udp: true
+  tls: true
+  network: tcp
+  servername: www.cloudflare.com
+  flow: xtls-rprx-vision
+  client-fingerprint: chrome
+  reality-opts:
+    public-key: 7WstRdriuBj10Q--FyWdHojWJ1VxFZgJzlNHdWYO52Y
+    short-id: "<REDACTED_SHORT_ID>"
+    spider-x: "/"
+- name: "🇯🇵 自建 Evoxt Osaka Hysteria2"
+  type: hysteria2
+  server: "<EVOXT_SERVER_IP>"
+  port: 443
+  password: "<REDACTED_PASSWORD>"
+  up: "10 Mbps"
+  down: "30 Mbps"
+  obfs: "salamander"
+  obfs-password: "<REDACTED_OBFS_PASSWORD>"
+  sni: "<EVOXT_SNI>"
+  skip-cert-verify: true
+  fingerprint: "D6:49:5A:8A:4D:C6:FD:A6:99:9E:1B:01:69:B8:71:03:FB:22:CA:50:B0:DF:A3:61:9D:DC:51:0C:A2:EA:22:CD"
+  alpn:
+  - h3
+  udp: true
+mixed-port: 7890
+allow-lan: true
+bind-address: "*"
+ipv6: false
+unified-delay: true
+tcp-concurrent: true
+log-level: warning
+keep-alive-idle: 600
+keep-alive-interval: 15
+profile:
+  store-selected: true
+  store-fake-ip: true
+sniffer:
+  skip-dst-address:
+  - 38.47.98.65/32
+  - <EVOXT_SERVER_IP>/32
+  enable: true
+  sniff:
+    HTTP:
+      ports:
+      - 80
+      - 8080-8880
+      override-destination: true
+    TLS:
+      ports:
+      - 443
+      - 8443
+    QUIC:
+      ports:
+      - 443
+      - 8443
+  skip-domain:
+  - Mijia Cloud
+  - "+.push.apple.com"
+tun:
+  enable: true
+  stack: mixed
+  dns-hijack:
+  - any:53
+  - tcp://any:53
+  auto-route: false
+  auto-redirect: false
+  auto-detect-interface: false
+dns:
+  enable: true
+  cache-algorithm: arc
+  listen: 0.0.0.0:1053
+  ipv6: false
+  respect-rules: true
+  enhanced-mode: fake-ip
+  fake-ip-range: 198.19.0.1/16
+  fake-ip-filter-mode: blacklist
+  default-nameserver:
+  - 223.5.5.5
+  - 119.29.29.29
+  proxy-server-nameserver:
+  - https://dns.alidns.com/dns-query
+  - https://doh.pub/dns-query
+  direct-nameserver:
+  - https://dns.alidns.com/dns-query
+  - https://doh.pub/dns-query
+  direct-nameserver-follow-policy: true
+  nameserver:
+  - https://dns.google/dns-query#RULES
+  - https://cloudflare-dns.com/dns-query#RULES
+  nameserver-policy:
+    rule-set:private_domain:
+    - https://dns.alidns.com/dns-query
+    - https://doh.pub/dns-query
+    rule-set:cn_domain:
+    - https://dns.alidns.com/dns-query
+    - https://doh.pub/dns-query
+    rule-set:geolocation-!cn:
+    - https://dns.google/dns-query#RULES
+    - https://cloudflare-dns.com/dns-query#RULES
+  fake-ip-filter:
+  - rule-set:fakeipfilter_domain
+  - resolvers.httpdns.aliyuncs.com
+  - "+.httpdns.aliyuncs.com"
+proxy-groups:
+- name: "\U0001F680 默认代理"
+  type: select
+  proxies:
+  - "♻️ 香港自动"
+  - "♻️ 日本自动"
+  - "♻️ 狮城自动"
+  - "♻️ 美国自动"
+  - "♻️ 自动选择"
+  - "\U0001F1ED\U0001F1F0 香港节点"
+  - "\U0001F1EF\U0001F1F5 日本节点"
+  - "\U0001F1F8\U0001F1EC 狮城节点"
+  - "♻️ 台湾自动"
+  - "\U0001F1F9\U0001F1FC 台湾节点"
+  - "\U0001F1FA\U0001F1F2 美国节点"
+  - "\U0001F9E9 自建节点"
+  - "♻️ 自建自动"
+  - 直连
+  - "\U0001F1F0\U0001F1F7 韩国节点"
+  - "♻️ 韩国自动"
+- name: "\U0001F9E9 自建节点"
+  type: select
+  proxies:
+  - "\U0001F1EF\U0001F1F5 自建 Evoxt Osaka Reality"
+  - "🇯🇵 自建 Evoxt Osaka Hysteria2"
+  - "\U0001F1EF\U0001F1F5 自建 Osaka Reality"
+  - vl-reality-instance-20260808-145531
+  - anytls-instance-20260808-145531
+  - al.ellison1208
+  - aa.ellison1208.xyz
+  - nw.ellison1208.xyz
+  - zl.ellison1208.xyz
+  - nk.ellison1208.xyz
+  - 直连
+- name: "♻️ 自建自动"
+  type: url-test
+  proxies:
+  - "\U0001F1EF\U0001F1F5 自建 Evoxt Osaka Reality"
+  - "🇯🇵 自建 Evoxt Osaka Hysteria2"
+  - "\U0001F1EF\U0001F1F5 自建 Osaka Reality"
+  - vl-reality-instance-20260808-145531
+  - anytls-instance-20260808-145531
+  - al.ellison1208
+  - aa.ellison1208.xyz
+  - nw.ellison1208.xyz
+  - zl.ellison1208.xyz
+  - nk.ellison1208.xyz
+  url: "<REDACTED_URL>"
+  expected-status: 204
+  tolerance: 50
+  interval: 90
+  timeout: 10000
+  max-failed-times: 3
+  lazy: true
+- name: "\U0001F4B0 虚拟货币"
+  type: select
+  proxies:
+  - "♻️ 台湾自动"
+  - "\U0001F1F9\U0001F1FC 台湾节点"
+  - "\U0001F9E9 自建节点"
+  - "♻️ 自建自动"
+  - "♻️ 日本自动"
+  - "\U0001F1EF\U0001F1F5 日本节点"
+  - "♻️ 狮城自动"
+  - "\U0001F1F8\U0001F1EC 狮城节点"
+  - "\U0001F1FA\U0001F1F2 美国节点"
+  - "♻️ 美国自动"
+  - "\U0001F1F0\U0001F1F7 韩国节点"
+  - "♻️ 韩国自动"
+- name: "\U0001F916 ChatGPT"
+  type: select
+  proxies:
+  - "♻️ 日本自动"
+  - "\U0001F1EF\U0001F1F5 日本节点"
+  - "♻️ 美国自动"
+  - "\U0001F1FA\U0001F1F2 美国节点"
+  - "\U0001F9E9 自建节点"
+  - "♻️ 自建自动"
+  - "♻️ 狮城自动"
+  - "\U0001F1F8\U0001F1EC 狮城节点"
+  - "\U0001F1F0\U0001F1F7 韩国节点"
+  - "♻️ 韩国自动"
+- name: "\U0001F916 其他 AI"
+  type: select
+  proxies:
+  - "♻️ 香港自动"
+  - "\U0001F1ED\U0001F1F0 香港节点"
+  - "♻️ 日本自动"
+  - "\U0001F1EF\U0001F1F5 日本节点"
+  - "♻️ 台湾自动"
+  - "\U0001F1F9\U0001F1FC 台湾节点"
+  - "♻️ 美国自动"
+  - "\U0001F1FA\U0001F1F2 美国节点"
+  - "♻️ 狮城自动"
+  - "\U0001F1F8\U0001F1EC 狮城节点"
+  - "\U0001F9E9 自建节点"
+  - "♻️ 自建自动"
+  - "\U0001F1F0\U0001F1F7 韩国节点"
+  - "♻️ 韩国自动"
+- name: "\U0001F3A5 NETFLIX"
+  type: select
+  proxies:
+  - "♻️ 香港自动"
+  - "\U0001F1ED\U0001F1F0 香港节点"
+  - "\U0001F9E9 自建节点"
+  - "♻️ 自建自动"
+  - "♻️ 狮城自动"
+  - "\U0001F1F8\U0001F1EC 狮城节点"
+  - "\U0001F1FA\U0001F1F2 美国节点"
+  - "♻️ 美国自动"
+  - "\U0001F1F0\U0001F1F7 韩国节点"
+  - "♻️ 韩国自动"
+- name: "\U0001F4F9 YouTube"
+  type: select
+  proxies:
+  - "♻️ 香港自动"
+  - "♻️ 日本自动"
+  - "♻️ 狮城自动"
+  - "♻️ 美国自动"
+  - "♻️ 自动选择"
+  - "\U0001F680 默认代理"
+  - 直连
+  - "\U0001F9E9 自建节点"
+  - "♻️ 自建自动"
+  - "♻️ 狮城自动"
+  - "\U0001F1F8\U0001F1EC 狮城节点"
+  - "\U0001F1FA\U0001F1F2 美国节点"
+  - "\U0001F1F0\U0001F1F7 韩国节点"
+  - "♻️ 韩国自动"
+- name: "\U0001F340 Google"
+  type: select
+  proxies:
+  - "♻️ 香港自动"
+  - "♻️ 日本自动"
+  - "\U0001F680 默认代理"
+  - 直连
+  - "\U0001F9E9 自建节点"
+  - "♻️ 自建自动"
+  - "♻️ 狮城自动"
+  - "\U0001F1F8\U0001F1EC 狮城节点"
+  - "\U0001F1FA\U0001F1F2 美国节点"
+  - "♻️ 美国自动"
+  - "\U0001F1F0\U0001F1F7 韩国节点"
+  - "♻️ 韩国自动"
+- name: "\U0001F468\U0001F3FF‍\U0001F4BB GitHub"
+  type: select
+  proxies:
+  - "♻️ 日本自动"
+  - "♻️ 香港自动"
+  - "\U0001F680 默认代理"
+  - 直连
+  - "\U0001F9E9 自建节点"
+  - "♻️ 自建自动"
+  - "♻️ 狮城自动"
+  - "\U0001F1F8\U0001F1EC 狮城节点"
+  - "\U0001F1FA\U0001F1F2 美国节点"
+  - "♻️ 美国自动"
+  - "\U0001F1F0\U0001F1F7 韩国节点"
+  - "♻️ 韩国自动"
+- name: "\U0001F42C OneDrive"
+  type: select
+  proxies:
+  - 直连
+  - "\U0001F680 默认代理"
+  - "♻️ 香港自动"
+  - "♻️ 日本自动"
+  - "\U0001F9E9 自建节点"
+  - "♻️ 自建自动"
+  - "♻️ 狮城自动"
+  - "\U0001F1F8\U0001F1EC 狮城节点"
+  - "\U0001F1FA\U0001F1F2 美国节点"
+  - "♻️ 美国自动"
+  - "\U0001F1F0\U0001F1F7 韩国节点"
+  - "♻️ 韩国自动"
+- name: "\U0001FA9F Microsoft"
+  type: select
+  proxies:
+  - 直连
+  - "\U0001F680 默认代理"
+  - "♻️ 香港自动"
+  - "♻️ 日本自动"
+  - "\U0001F9E9 自建节点"
+  - "♻️ 自建自动"
+  - "♻️ 狮城自动"
+  - "\U0001F1F8\U0001F1EC 狮城节点"
+  - "\U0001F1FA\U0001F1F2 美国节点"
+  - "♻️ 美国自动"
+  - "\U0001F1F0\U0001F1F7 韩国节点"
+  - "♻️ 韩国自动"
+- name: "\U0001F3B5 TikTok"
+  type: select
+  proxies:
+  - "♻️ 日本自动"
+  - "♻️ 狮城自动"
+  - "♻️ 美国自动"
+  - "\U0001F680 默认代理"
+  - 直连
+  - "\U0001F9E9 自建节点"
+  - "♻️ 自建自动"
+  - "\U0001F1FA\U0001F1F2 美国节点"
+  - "\U0001F1F0\U0001F1F7 韩国节点"
+  - "♻️ 韩国自动"
+- name: "\U0001F4F2 Telegram"
+  type: select
+  proxies:
+  - "♻️ 狮城自动"
+  - "♻️ 香港自动"
+  - "♻️ 日本自动"
+  - "\U0001F680 默认代理"
+  - 直连
+  - "\U0001F9E9 自建节点"
+  - "♻️ 自建自动"
+  - "\U0001F1FA\U0001F1F2 美国节点"
+  - "♻️ 美国自动"
+  - "\U0001F1F0\U0001F1F7 韩国节点"
+  - "♻️ 韩国自动"
+- name: "\U0001F4AC 社交通讯"
+  type: select
+  proxies:
+  - "\U0001F680 默认代理"
+  - "♻️ 狮城自动"
+  - "♻️ 日本自动"
+  - "♻️ 美国自动"
+  - 直连
+  - "\U0001F9E9 自建节点"
+  - "♻️ 自建自动"
+  - "\U0001F1FA\U0001F1F2 美国节点"
+  - "\U0001F1F0\U0001F1F7 韩国节点"
+  - "♻️ 韩国自动"
+- name: "\U0001F30D 海外媒体"
+  type: select
+  proxies:
+  - "\U0001F680 默认代理"
+  - "♻️ 香港自动"
+  - "♻️ 日本自动"
+  - "♻️ 狮城自动"
+  - "♻️ 美国自动"
+  - 直连
+  - "\U0001F9E9 自建节点"
+  - "♻️ 自建自动"
+  - "\U0001F1FA\U0001F1F2 美国节点"
+  - "\U0001F1F0\U0001F1F7 韩国节点"
+  - "♻️ 韩国自动"
+- name: "\U0001F4B6 PayPal"
+  type: select
+  proxies:
+  - "\U0001F1EF\U0001F1F5 日本节点"
+  - "♻️ 日本自动"
+  - "\U0001F9E9 自建节点"
+  - "♻️ 自建自动"
+  - "\U0001F1FA\U0001F1F2 美国节点"
+  - "♻️ 美国自动"
+  - "\U0001F1F0\U0001F1F7 韩国节点"
+  - "♻️ 韩国自动"
+- name: "\U0001F4BC iFAST（香港）"
+  type: select
+  proxies:
+  - "\U0001F1ED\U0001F1F0 香港节点"
+  - "♻️ 香港自动"
+  - "\U0001F9E9 自建节点"
+  - "♻️ 自建自动"
+  - "\U0001F1FA\U0001F1F2 美国节点"
+  - "♻️ 美国自动"
+  - "\U0001F1F0\U0001F1F7 韩国节点"
+  - "♻️ 韩国自动"
+- name: "\U0001F3E6 嘉信（香港）"
+  type: select
+  proxies:
+  - "\U0001F1ED\U0001F1F0 香港节点"
+  - "♻️ 香港自动"
+  - "\U0001F9E9 自建节点"
+  - "♻️ 自建自动"
+  - "\U0001F1FA\U0001F1F2 美国节点"
+  - "♻️ 美国自动"
+  - "\U0001F1F0\U0001F1F7 韩国节点"
+  - "♻️ 韩国自动"
+- name: "\U0001F4B9 IBKR（香港）"
+  type: select
+  proxies:
+  - "\U0001F1ED\U0001F1F0 香港节点"
+  - "♻️ 香港自动"
+  - "\U0001F9E9 自建节点"
+  - "♻️ 自建自动"
+  - "\U0001F1FA\U0001F1F2 美国节点"
+  - "♻️ 美国自动"
+  - "\U0001F1F0\U0001F1F7 韩国节点"
+  - "♻️ 韩国自动"
+- name: "\U0001F3E6 香港服务"
+  type: select
+  proxies:
+  - "\U0001F1ED\U0001F1F0 香港节点"
+  - "♻️ 香港自动"
+  - 直连
+  - "\U0001F9E9 自建节点"
+  - "♻️ 自建自动"
+  - "\U0001F1FA\U0001F1F2 美国节点"
+  - "♻️ 美国自动"
+  - "\U0001F1F0\U0001F1F7 韩国节点"
+  - "♻️ 韩国自动"
+- name: "\U0001F9F1 GFW 兜底"
+  type: select
+  proxies:
+  - "\U0001F680 默认代理"
+  - "♻️ 香港自动"
+  - "♻️ 日本自动"
+  - "♻️ 狮城自动"
+  - "♻️ 美国自动"
+  - 直连
+  - "\U0001F9E9 自建节点"
+  - "♻️ 自建自动"
+  - "\U0001F1FA\U0001F1F2 美国节点"
+  - "\U0001F1F0\U0001F1F7 韩国节点"
+  - "♻️ 韩国自动"
+- name: "\U0001F500 非标端口"
+  type: select
+  proxies:
+  - "\U0001F41F 漏网之鱼"
+  - 直连
+  - "\U0001F680 默认代理"
+  - "\U0001F9E9 自建节点"
+  - "♻️ 自建自动"
+  - "\U0001F1FA\U0001F1F2 美国节点"
+  - "♻️ 美国自动"
+  - "\U0001F1F0\U0001F1F7 韩国节点"
+  - "♻️ 韩国自动"
+- name: "\U0001F41F 漏网之鱼"
+  type: select
+  proxies:
+  - "\U0001F680 默认代理"
+  - "♻️ 香港自动"
+  - "♻️ 日本自动"
+  - "♻️ 狮城自动"
+  - "♻️ 美国自动"
+  - "♻️ 自动选择"
+  - 直连
+  - "\U0001F9E9 自建节点"
+  - "♻️ 自建自动"
+  - "\U0001F1FA\U0001F1F2 美国节点"
+  - "\U0001F1F0\U0001F1F7 韩国节点"
+  - "♻️ 韩国自动"
+- name: "\U0001F1ED\U0001F1F0 香港节点"
+  type: select
+  include-all: true
+  filter: "(?=.*(港|HK|(?i)Hong))^((?!(台|日|韩|新|深|美)).)*$"
+- name: "\U0001F1EF\U0001F1F5 日本节点"
+  type: select
+  include-all: true
+  filter: "(?=.*(日|JP|(?i)Japan))^((?!(港|台|韩|新|美)).)*$"
+  exclude-filter: "cheap \\| \U0001F1EF\U0001F1F5日本东京0[1-5]"
+- name: "\U0001F1F8\U0001F1EC 狮城节点"
+  type: select
+  include-all: true
+  filter: "(?=.*(新加坡|坡|狮城|SG|Singapore))^((?!(台|日|韩|深|美)).)*$"
+- name: "\U0001F1F9\U0001F1FC 台湾节点"
+  type: select
+  include-all: true
+  filter: "(?=.*(台|TW|(?i)Taiwan))^((?!(港|日|韩|新|美|ykk)).)*$"
+- name: "\U0001F1FA\U0001F1F2 美国节点"
+  type: select
+  include-all: true
+  filter: "(?=.*(美|US|(?i)States|America))^((?!(港|台|韩|新|日)).)*$"
+- name: "\U0001F1F0\U0001F1F7 韩国节点"
+  type: select
+  include-all: true
+  filter: "(?=.*(韩|KR|(?i)Korea|Seoul))^((?!(港|台|日|新|美)).)*$"
+- name: "♻️ 韩国自动"
+  type: url-test
+  include-all: true
+  url: "<REDACTED_URL>"
+  expected-status: 204
+  tolerance: 50
+  interval: 90
+  timeout: 5000
+  max-failed-times: 3
+  lazy: true
+  filter: "(?=.*(韩|KR|(?i)Korea|Seoul))^((?!(港|台|日|新|美)).)*$"
+- name: "♻️ 香港自动"
+  type: url-test
+  include-all: true
+  url: "<REDACTED_URL>"
+  expected-status: 204
+  tolerance: 50
+  interval: 90
+  timeout: 5000
+  max-failed-times: 3
+  lazy: true
+  filter: "(?=.*(港|HK|(?i)Hong))^((?!(台|日|韩|新|深|美)).)*$"
+- name: "♻️ 日本自动"
+  type: url-test
+  include-all: true
+  url: "<REDACTED_URL>"
+  expected-status: 204
+  tolerance: 50
+  interval: 90
+  timeout: 5000
+  max-failed-times: 3
+  lazy: true
+  filter: "(?=.*(日|JP|(?i)Japan))^((?!(港|台|韩|新|美)).)*$"
+  exclude-filter: "cheap \\| \U0001F1EF\U0001F1F5日本东京0[1-5]"
+- name: "♻️ 狮城自动"
+  type: url-test
+  include-all: true
+  url: "<REDACTED_URL>"
+  expected-status: 204
+  tolerance: 50
+  interval: 90
+  timeout: 5000
+  max-failed-times: 3
+  lazy: true
+  filter: "(?=.*(新加坡|坡|狮城|SG|Singapore))^((?!(台|日|韩|深|美)).)*$"
+- name: "♻️ 台湾自动"
+  type: url-test
+  include-all: true
+  url: "<REDACTED_URL>"
+  expected-status: 204
+  tolerance: 50
+  interval: 90
+  timeout: 5000
+  max-failed-times: 3
+  lazy: true
+  filter: "(?=.*(台|TW|(?i)Taiwan))^((?!(港|日|韩|新|美|ykk)).)*$"
+- name: "♻️ 美国自动"
+  type: url-test
+  include-all: true
+  url: "<REDACTED_URL>"
+  expected-status: 204
+  tolerance: 50
+  interval: 90
+  timeout: 5000
+  max-failed-times: 3
+  lazy: true
+  filter: "(?=.*(美|US|(?i)States|America))^((?!(港|台|日|韩|新)).)*$"
+- name: "♻️ 自动选择"
+  type: url-test
+  include-all: true
+  url: "<REDACTED_URL>"
+  expected-status: 204
+  tolerance: 50
+  interval: 90
+  timeout: 5000
+  max-failed-times: 3
+  lazy: true
+  filter: "^((?!(直连)).)*$"
+- name: "\U0001F310 全部节点"
+  type: select
+  include-all: true
+  hidden: true
+rules:
+- IP-CIDR,<EVOXT_SERVER_IP>/32,直连,no-resolve
+- IP-CIDR,38.47.98.65/32,直连,no-resolve
+- RULE-SET,private_ip,直连,no-resolve
+- RULE-SET,private_domain,直连
+- DOMAIN-SUFFIX,httpdns.aliyuncs.com,直连
+- DOMAIN-SUFFIX,taobao.com,直连
+- DOMAIN-SUFFIX,tmall.com,直连
+- DOMAIN-SUFFIX,taobaocdn.com,直连
+- DOMAIN-SUFFIX,alipay.com,直连
+- DOMAIN-SUFFIX,alipaydns.com,直连
+- DOMAIN-SUFFIX,alipayobjects.com,直连
+- "DOMAIN-SUFFIX,bitget.cafe,\U0001F4B0 虚拟货币"
+- "DOMAIN-SUFFIX,ifastgb.com,\U0001F4BC iFAST（香港）"
+- "DOMAIN-SUFFIX,schwab.com,\U0001F3E6 嘉信（香港）"
+- "DOMAIN-SUFFIX,schwabcdn.com,\U0001F3E6 嘉信（香港）"
+- "DOMAIN-SUFFIX,schwabplan.com,\U0001F3E6 嘉信（香港）"
+- "DOMAIN-SUFFIX,thinkorswim.com,\U0001F3E6 嘉信（香港）"
+- "DOMAIN-SUFFIX,interactivebrokers.com,\U0001F4B9 IBKR（香港）"
+- "DOMAIN-SUFFIX,ibkr.com,\U0001F4B9 IBKR（香港）"
+- "DOMAIN,frontier100-toutiao-lf.fqnovel.com,\U0001F680 默认代理"
+- "DOMAIN-SUFFIX,hk,\U0001F3E6 香港服务"
+- "DOMAIN-SUFFIX,hangseng.com,\U0001F3E6 香港服务"
+- "DOMAIN-SUFFIX,bochk.com,\U0001F3E6 香港服务"
+- "DOMAIN-SUFFIX,hkbea.com,\U0001F3E6 香港服务"
+- "DOMAIN-SUFFIX,dahsing.com,\U0001F3E6 香港服务"
+- "DOMAIN-SUFFIX,cmbwinglungbank.com,\U0001F3E6 香港服务"
+- "DOMAIN-SUFFIX,mox.com,\U0001F3E6 香港服务"
+- "DOMAIN-SUFFIX,welab.bank,\U0001F3E6 香港服务"
+- "DOMAIN-SUFFIX,fusionbank.com,\U0001F3E6 香港服务"
+- "DOMAIN-SUFFIX,za.group,\U0001F3E6 香港服务"
+- "DOMAIN-SUFFIX,airstarbank.com,\U0001F3E6 香港服务"
+- "DOMAIN-SUFFIX,chbank.com,\U0001F3E6 香港服务"
+- "DOMAIN-SUFFIX,alipayhk.com,\U0001F3E6 香港服务"
+- "DOMAIN-SUFFIX,openrice.com,\U0001F3E6 香港服务"
+- "DOMAIN-SUFFIX,hktvmall.com,\U0001F3E6 香港服务"
+- "DOMAIN-SUFFIX,cathaypacific.com,\U0001F3E6 香港服务"
+- "DOMAIN-SUFFIX,chatgpt.com,\U0001F916 ChatGPT"
+- "DOMAIN-SUFFIX,openai.com,\U0001F916 ChatGPT"
+- "DOMAIN-SUFFIX,oaistatic.com,\U0001F916 ChatGPT"
+- "DOMAIN-SUFFIX,oaiusercontent.com,\U0001F916 ChatGPT"
+- "RULE-SET,ai,\U0001F916 其他 AI"
+- "RULE-SET,cryptocurrency,\U0001F4B0 虚拟货币"
+- "RULE-SET,github_domain,\U0001F468\U0001F3FF‍\U0001F4BB GitHub"
+- "RULE-SET,youtube_domain,\U0001F4F9 YouTube"
+- "RULE-SET,google_domain,\U0001F340 Google"
+- "RULE-SET,onedrive_domain,\U0001F42C OneDrive"
+- "RULE-SET,microsoft_domain,\U0001FA9F Microsoft"
+- RULE-SET,apple_domain,直连
+- "RULE-SET,tiktok_domain,\U0001F3B5 TikTok"
+- "RULE-SET,telegram_domain,\U0001F4F2 Telegram"
+- "RULE-SET,netflix_domain,\U0001F3A5 NETFLIX"
+- "RULE-SET,paypal_domain,\U0001F4B6 PayPal"
+- "RULE-SET,social_domain,\U0001F4AC 社交通讯"
+- "RULE-SET,communication_domain,\U0001F4AC 社交通讯"
+- "RULE-SET,entertainment_domain,\U0001F30D 海外媒体"
+- "GEOSITE,category-social-media-!cn,\U0001F4AC 社交通讯"
+- "GEOSITE,category-communication,\U0001F4AC 社交通讯"
+- "GEOSITE,category-entertainment,\U0001F30D 海外媒体"
+- "GEOSITE,geolocation-!cn,\U0001F680 默认代理"
+- RULE-SET,apple_ip,直连
+- "RULE-SET,google_ip,\U0001F340 Google"
+- "RULE-SET,netflix_ip,\U0001F3A5 NETFLIX"
+- "RULE-SET,telegram_ip,\U0001F4F2 Telegram"
+- "DOMAIN-SUFFIX,qichiyu.com,\U0001F680 默认代理"
+- "RULE-SET,proxylite,\U0001F680 默认代理"
+- "RULE-SET,gfw_domain,\U0001F9F1 GFW 兜底"
+- "RULE-SET,geolocation-!cn,\U0001F680 默认代理"
+- RULE-SET,cn_domain,直连
+- RULE-SET,cn_ip,直连
+- "RULE-SET,nonstandard_port,\U0001F500 非标端口"
+- "MATCH,\U0001F41F 漏网之鱼"
+rule-anchor:
+  ip:
+    type: http
+    interval: 86400
+    behavior: ipcidr
+    format: mrs
+  domain:
+    type: http
+    interval: 86400
+    behavior: domain
+    format: mrs
+  class:
+    type: http
+    interval: 86400
+    format: text
+    behavior: classical
+rule-providers:
+  fakeipfilter_domain:
+    type: http
+    interval: 86400
+    behavior: domain
+    format: mrs
+    url: "<REDACTED_URL>"
+  private_domain:
+    type: http
+    interval: 86400
+    behavior: domain
+    format: mrs
+    url: "<REDACTED_URL>"
+  proxylite:
+    type: http
+    interval: 86400
+    format: text
+    behavior: classical
+    url: "<REDACTED_URL>"
+  ai:
+    type: http
+    interval: 86400
+    behavior: domain
+    format: mrs
+    url: "<REDACTED_URL>"
+  cryptocurrency:
+    type: http
+    interval: 86400
+    behavior: domain
+    format: mrs
+    url: "<REDACTED_URL>"
+  social_domain:
+    type: http
+    interval: 86400
+    behavior: domain
+    format: mrs
+    url: "<REDACTED_URL>"
+  communication_domain:
+    type: http
+    interval: 86400
+    behavior: domain
+    format: mrs
+    url: "<REDACTED_URL>"
+  entertainment_domain:
+    type: http
+    interval: 86400
+    behavior: domain
+    format: mrs
+    url: "<REDACTED_URL>"
+  gfw_domain:
+    type: http
+    interval: 86400
+    behavior: domain
+    format: mrs
+    url: "<REDACTED_URL>"
+  youtube_domain:
+    type: http
+    interval: 86400
+    behavior: domain
+    format: mrs
+    url: "<REDACTED_URL>"
+  google_domain:
+    type: http
+    interval: 86400
+    behavior: domain
+    format: mrs
+    url: "<REDACTED_URL>"
+  github_domain:
+    type: http
+    interval: 86400
+    behavior: domain
+    format: mrs
+    url: "<REDACTED_URL>"
+  telegram_domain:
+    type: http
+    interval: 86400
+    behavior: domain
+    format: mrs
+    url: "<REDACTED_URL>"
+  netflix_domain:
+    type: http
+    interval: 86400
+    behavior: domain
+    format: mrs
+    url: "<REDACTED_URL>"
+  paypal_domain:
+    type: http
+    interval: 86400
+    behavior: domain
+    format: mrs
+    url: "<REDACTED_URL>"
+  onedrive_domain:
+    type: http
+    interval: 86400
+    behavior: domain
+    format: mrs
+    url: "<REDACTED_URL>"
+  microsoft_domain:
+    type: http
+    interval: 86400
+    behavior: domain
+    format: mrs
+    url: "<REDACTED_URL>"
+  apple_domain:
+    type: http
+    interval: 86400
+    behavior: domain
+    format: mrs
+    url: "<REDACTED_URL>"
+  tiktok_domain:
+    type: http
+    interval: 86400
+    behavior: domain
+    format: mrs
+    url: "<REDACTED_URL>"
+  geolocation-!cn:
+    type: http
+    interval: 86400
+    behavior: domain
+    format: mrs
+    url: "<REDACTED_URL>"
+  cn_domain:
+    type: http
+    interval: 86400
+    behavior: domain
+    format: mrs
+    url: "<REDACTED_URL>"
+  private_ip:
+    type: http
+    interval: 86400
+    behavior: ipcidr
+    format: mrs
+    url: "<REDACTED_URL>"
+  cn_ip:
+    type: http
+    interval: 86400
+    behavior: ipcidr
+    format: mrs
+    url: "<REDACTED_URL>"
+  google_ip:
+    type: http
+    interval: 86400
+    behavior: ipcidr
+    format: mrs
+    url: "<REDACTED_URL>"
+  telegram_ip:
+    type: http
+    interval: 86400
+    behavior: ipcidr
+    format: mrs
+    url: "<REDACTED_URL>"
+  netflix_ip:
+    type: http
+    interval: 86400
+    behavior: ipcidr
+    format: mrs
+    url: "<REDACTED_URL>"
+  apple_ip:
+    type: http
+    interval: 86400
+    behavior: ipcidr
+    format: mrs
+    url: "<REDACTED_URL>"
+  nonstandard_port:
+    type: inline
+    behavior: classical
+    payload:
+    - DST-PORT,3478-3481
+    - DST-PORT,5228
+    - DST-PORT,6881-6999
+    - DST-PORT,8080
+    - DST-PORT,8443
