@@ -1,0 +1,5 @@
+sniffer:
+  skip-dst-address:
+  - <LEGACY_ENDPOINT_1>/32
+  - <LEGACY_ENDPOINT_2>/32
+  - <ZGOVPS_SERVER_IP>/32
